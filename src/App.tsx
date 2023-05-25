@@ -6,6 +6,9 @@ const darkTheme = createTheme({
   palette: {
     mode: "dark",
   },
+  typography: {
+    fontFamily: "poppins",
+  },
 });
 
 const App: React.FC = () => {
