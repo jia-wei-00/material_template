@@ -1,12 +1,20 @@
+@import "../variables";
+
 .wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   color: white;
+  overflow: hidden;
 
-  & > .card {
+  .icon {
+    padding: 0 10px 4px 0;
+  }
+
+  & > div >.card {
     padding: 10px;
+    max-width: 350px;
   }
 
   .btn-group {
@@ -26,21 +34,18 @@
       width: 50%;
       left: 0;
     }
-
-    & > .register-active {
-      transform: translateX(100%);
-    }
   }
 
   form {
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
+    row-gap: 30px;
   }
 
   .box {
     display: flex;
     align-items: flex-end;
+    // transition: $transition;
   }
 
   .form-control {
