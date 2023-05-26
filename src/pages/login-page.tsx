@@ -84,7 +84,7 @@ const LoginPage: React.FC = () => {
                 animate={
                   active === "register"
                     ? { height: "auto", opacity: 1 }
-                    : { margin: -20, height: 0, opacity: 0 }
+                    : { marginTop: -40, height: 0, opacity: 0 }
                 }
               >
                 <Box className="box">
@@ -125,6 +125,7 @@ const LoginPage: React.FC = () => {
           </CardContent>
         </Card>
       </motion.div>
+      <HomeParticle />
     </div>
   );
 };
