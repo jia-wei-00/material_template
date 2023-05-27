@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth, provider } from "../firebase";
 
-export class authStoreImplementation {
+export class AuthStoreImplementation {
   user = null;
   username = null;
   login_modal = false;
@@ -40,8 +40,8 @@ export class authStoreImplementation {
     this.login_modal = props;
   }
 
-  signInAPI(email, password) {
-    return new Promise((resolve, reject) => {
+  signInAPI(email: string, password: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
       const id = toast.loading("Please wait...");
       auth
         .signInWithEmailAndPassword(email, password)
@@ -67,8 +67,8 @@ export class authStoreImplementation {
     });
   }
 
-  googleSignIn() {
-    return new Promise((resolve, reject) => {
+  googleSignIn(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
       const id = toast.loading("Please wait...");
       auth
         .signInWithPopup(provider)
@@ -95,8 +95,8 @@ export class authStoreImplementation {
     });
   }
 
-  signOut() {
-    return new Promise((resolve, reject) => {
+  signOut(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
       const id = toast.loading("Please wait...");
       auth
         .signOut()
@@ -124,8 +124,8 @@ export class authStoreImplementation {
     });
   }
 
-  signUp(email, password) {
-    return new Promise((resolve, reject) => {
+  signUp(email: string, password: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
       const id = toast.loading("Please wait...");
       auth
         .createUserWithEmailAndPassword(email, password)
@@ -152,6 +152,6 @@ export class authStoreImplementation {
   }
 }
 
-const authStore = new authStoreImplementation();
+const authStore = new AuthStoreImplementation();
 
 export default authStore;
