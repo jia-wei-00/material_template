@@ -15,7 +15,6 @@ export class AuthStoreImplementation {
       username: observable,
       login_modal: observable,
       setUser: action.bound,
-      signInAPI: action.bound,
       signOut: action.bound,
     });
 
@@ -69,38 +68,11 @@ export class AuthStoreImplementation {
     }
   }
 
-  signInAPI(email: string, password: string): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
-      const id = toast.loading("Please wait...");
-      auth
-        .signInWithEmailAndPassword(email, password)
-        .then((user) => {
-          toast.update(id, {
-            render: "Welcome " + user.user.email,
-            type: "success",
-            isLoading: false,
-            autoClose: 5000,
-          });
-          this.setUser(user.user);
-          resolve(true); // Resolve the Promise with a boolean value indicating success
-        })
-        .catch((error) => {
-          toast.update(id, {
-            render: error.message,
-            type: "error",
-            isLoading: false,
-            autoClose: 5000,
-          });
-          reject(error.message); // Reject the Promise with the error message
-        });
-    });
-  }
-
   googleSignIn(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       const id = toast.loading("Please wait...");
       auth
-        .signInWithPopup(provider)
+        .signInWithPopup(auth.getAuth(), provider)
         .then((result) => {
           toast.update(id, {
             render: "Welcome " + result.user.displayName,
@@ -128,7 +100,7 @@ export class AuthStoreImplementation {
     return new Promise<boolean>((resolve, reject) => {
       const id = toast.loading("Please wait...");
       auth
-        .signOut()
+        .signOut(auth.getAuth())
         .then(() => {
           toast.update(id, {
             render: "Successfully Logout",
@@ -157,7 +129,7 @@ export class AuthStoreImplementation {
     return new Promise<boolean>((resolve, reject) => {
       const id = toast.loading("Please wait...");
       auth
-        .createUserWithEmailAndPassword(email, password)
+        .createUserWithEmailAndPassword(auth.getAuth(), email, password)
         .then((userCredential) => {
           toast.update(id, {
             render: `Welcome ${userCredential.user.email}`,
