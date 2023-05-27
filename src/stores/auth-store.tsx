@@ -2,10 +2,11 @@ import { makeObservable, action, observable } from "mobx";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth, provider } from "../firebase";
+import { User } from "firebase/auth";
 
 export class AuthStoreImplementation {
-  user = null;
-  username = null;
+  user: User | null = null;
+  username = "";
   login_modal = false;
 
   constructor() {
@@ -16,12 +17,11 @@ export class AuthStoreImplementation {
       setUser: action.bound,
       signInAPI: action.bound,
       signOut: action.bound,
-      setLoginModal: action.bound,
     });
 
     auth.onAuthStateChanged((user) => {
       if (user) {
-        this.setUser(user.email);
+        this.setUser(user);
       } else {
         this.setUser(null);
       }
@@ -32,12 +32,22 @@ export class AuthStoreImplementation {
     this.user = user;
   }
 
-  setUsername(username) {
+  setUsername(username: string) {
     this.username = username;
   }
 
-  setLoginModal(props) {
-    this.login_modal = props;
+  async signIn(email: string, password: string) {
+    const id = toast.loading("Please wait...");
+    try {
+      const user = await auth.signInWithEmailAndPassword(email, password);
+      toast.update(id, {
+        render: "Welcome " + user.user!.email,
+        type: "success",
+        isLoading: false,
+        autoClose: 5000,
+      });
+      this.user = user.user;
+    } catch (error) {}
   }
 
   signInAPI(email: string, password: string): Promise<boolean> {
@@ -52,7 +62,7 @@ export class AuthStoreImplementation {
             isLoading: false,
             autoClose: 5000,
           });
-          this.setUser(user.user.email);
+          this.setUser(user.user);
           resolve(true); // Resolve the Promise with a boolean value indicating success
         })
         .catch((error) => {

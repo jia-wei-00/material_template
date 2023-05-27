@@ -3,7 +3,7 @@ import { LoginPage } from "./pages";
 import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme, lightTheme } from "./theme";
 import "./styles/main.scss";
-import { modeStore } from "./store";
+import { modeStore } from "./stores";
 import { Brightness7, ModeNight } from "@mui/icons-material";
 import { observer } from "mobx-react-lite";
 

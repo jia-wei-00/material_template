@@ -4,7 +4,7 @@ import type { Engine, ISourceOptions } from "tsparticles-engine";
 import { loadFull } from "tsparticles";
 import "../styles/components/particles.scss";
 import { observer } from "mobx-react-lite";
-import { modeStore } from "../store";
+import { modeStore } from "../stores";
 import "../styles/components/particles.scss";
 
 // Particle config files

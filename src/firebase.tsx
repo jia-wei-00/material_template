@@ -1,12 +1,14 @@
 // Import the functions you need from the SDKs you need
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
-import "firebase/compat/storage";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getDatabase } from "firebase/database";
+import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// besquare email
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDTUmLdmXgYWr5ZdiPps7CPWOdnbkuB8RY",
   authDomain: "drc-project-d08da.firebaseapp.com",
@@ -18,11 +20,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-const db = firebaseApp.firestore();
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
-const storage = firebase.storage();
+const firebaseApp = initializeApp(firebaseConfig);
+const analytics = getAnalytics(firebaseApp);
+const provider = new GoogleAuthProvider();
+const db = getDatabase(firebaseApp);
+const auth = getAuth();
 
-export { auth, provider, storage };
-export default db;
+export { auth, analytics, provider, db };
