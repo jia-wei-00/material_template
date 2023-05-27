@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/pages/login-page.scss";
+import "../styles/pages/login.scss";
 import {
   Box,
   Button,

@@ -1,18 +1,22 @@
-import {observable, makeObservable, action} from "mobx";
+import { observable, makeObservable, action } from "mobx";
 
 class modeStoreImplementation {
-    dark_mode = true;
+  mode = "dark";
 
-    constructor() {
-        makeObservable(this,{
-            dark_mode: observable,
-            setMode: action,
-        })
-    }
+  constructor() {
+    makeObservable(this, {
+      mode: observable,
+      setMode: action,
+    });
+  }
 
-    setMode() {
-        this.dark_mode = !this.dark_mode;
+  setMode() {
+    if (this.mode === "dark") {
+      this.mode = "light";
+    } else if (this.mode === "light") {
+      this.mode = "dark";
     }
+  }
 }
 
 const modeStore = new modeStoreImplementation();

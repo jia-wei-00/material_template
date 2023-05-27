@@ -18,7 +18,14 @@ const ParticleComponent: React.FC = () => {
 
   return (
     <div className="particle-wrapper">
-      <Particles options={configLight as ISourceOptions} init={particlesInit} />
+      <Particles
+        options={
+          modeStore.mode === "light"
+            ? (configLight as ISourceOptions)
+            : (configDark as ISourceOptions)
+        }
+        init={particlesInit}
+      />
     </div>
   );
 };
