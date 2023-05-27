@@ -19,18 +19,26 @@ export class AuthStoreImplementation {
       signOut: action.bound,
     });
 
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.setUser(user);
-      } else {
-        this.setUser(null);
+    auth.onAuthStateChanged(
+      (user) => {
+        if (user) {
+          this.setUser(user);
+        } else {
+          this.setUser(null);
+        }
+      },
+      (error) => {
+        // Handle error if needed
+      },
+      () => {
+        // Completion callback if needed
       }
-    });
+    );
   }
 
-  setUser(user) {
-    this.user = user;
-  }
+  setUser = (authUser: User | null): void => {
+    this.user = authUser;
+  };
 
   setUsername(username: string) {
     this.username = username;
@@ -39,15 +47,26 @@ export class AuthStoreImplementation {
   async signIn(email: string, password: string) {
     const id = toast.loading("Please wait...");
     try {
-      const user = await auth.signInWithEmailAndPassword(email, password);
+      const user = await auth.signInWithEmailAndPassword(
+        auth.getAuth(),
+        email,
+        password
+      );
       toast.update(id, {
-        render: "Welcome " + user.user!.email,
+        render: "Welcome " + user.user.email,
         type: "success",
         isLoading: false,
         autoClose: 5000,
       });
       this.user = user.user;
-    } catch (error) {}
+    } catch (error: any) {
+      toast.update(id, {
+        render: error.message,
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      });
+    }
   }
 
   signInAPI(email: string, password: string): Promise<boolean> {
