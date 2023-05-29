@@ -11,7 +11,6 @@ import {
   Input,
   InputAdornment,
   InputLabel,
-  TextField,
 } from "@mui/material";
 import {
   EmailRounded,
@@ -22,31 +21,37 @@ import {
 import { motion } from "framer-motion";
 import { HomeParticle } from "../components";
 import { authStore } from "../stores";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema, loginSchema } from "../schemas/login-page-schemas";
+import { InputData } from "../types/form";
 
 const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const [showRepeatPassword, setShowRepeatPassword] =
     React.useState<boolean>(false);
   const [active, setActive] = React.useState<string>("login");
-  const [email, setEmail] = React.useState<string>("");
-  const [password, setPassword] = React.useState<string>("");
-  const [repeatPassword, setRepeatPassword] = React.useState<string>("");
-  const [formSubmitted, setFormSubmitted] = React.useState<boolean>(false);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const {
+    register,
+    formState: { errors, isSubmitSuccessful },
+    reset,
+    handleSubmit,
+  } = useForm<InputData>({
+    resolver: zodResolver(active === "login" ? loginSchema : registerSchema),
+  });
 
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
+  React.useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubmitSuccessful]);
 
-  const handleLoginRegister = (e: React.FormEvent<HTMLFormElement>): void => {
-    // if(email || pass)
-    e.preventDefault();
+  const onSubmitHandler: SubmitHandler<InputData> = (values) => {
     active === "login"
-      ? authStore.signIn(email, password)
-      : authStore.signUp(email, repeatPassword);
+      ? authStore.signIn(values.email, values.password)
+      : authStore.signUp(values.email, values.passwordConfirm!);
   };
 
   return (
@@ -62,69 +67,71 @@ const LoginPage: React.FC = () => {
                 className="indicator"
               />
             </motion.div>
-            <motion.form className="mt-10" onSubmit={handleLoginRegister}>
-              <Box className="box mt-10">
+            <motion.form
+              className="mt-10"
+              onSubmit={handleSubmit(onSubmitHandler)}
+            >
+              {/* Email Input */}
+              <Box
+                className={`${
+                  !!errors["email"] ? "flex-center" : "flex-end"
+                } box mt-10`}
+              >
                 <EmailRounded className="icon" />
                 <FormControl variant="standard" className="form-control">
                   <InputLabel
-                    error={!/\S+@\S+\.\S+/.test(email) && email != ""}
+                    error={!!errors["email"]}
                     htmlFor="standard-email"
                   >
                     Email
                   </InputLabel>
                   <Input
-                    error={!/\S+@\S+\.\S+/.test(email) && email != ""}
-                    id="standard-error-helper-text"
-                    onChange={(e) => setEmail(e.target.value)}
+                    error={!!errors["email"]}
                     type="email"
-                    value={email}
-                    required
+                    {...register("email")}
                   />
-                  <FormHelperText
-                    error={
-                      !/\S+@\S+\.\S+/.test(email) &&
-                      email !== "" &&
-                      formSubmitted &&
-                      email === ""
-                    }
-                  >
-                    {!email
-                      ? "Please fill in your email"
-                      : !/\S+@\S+\.\S+/.test(email)
-                      ? "Incorrect email format"
-                      : "Nice"}
+                  <FormHelperText error={!!errors["email"]}>
+                    {errors["email"] ? errors["email"].message : ""}
                   </FormHelperText>
                 </FormControl>
               </Box>
-              <Box className={`box ${active === "login" && "mb-10"}`}>
+
+              {/* Password Input */}
+              <Box
+                className={`${
+                  !!errors["password"] ? "flex-center" : "flex-end"
+                } box`}
+              >
                 <Lock className="icon" />
                 <FormControl variant="standard">
-                  <InputLabel htmlFor="standard-adornment-password">
+                  <InputLabel
+                    error={!!errors["password"]}
+                    htmlFor="standard-adornment-password"
+                  >
                     Password
                   </InputLabel>
                   <Input
-                    id="standard-adornment-password"
                     type={showPassword ? "text" : "password"}
-                    onChange={(e) => setPassword(e.target.value)}
+                    error={!!errors["password"]}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
                           aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
+                          onClick={() => setShowPassword((show) => !show)}
                         >
                           {showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                       </InputAdornment>
                     }
-                    required
+                    {...register("password")}
                   />
-                  <FormHelperText error={!password}>
-                    {!password ? "Please fill in your password" : "Nice"}
+                  <FormHelperText error={!!errors["password"]}>
+                    {errors["password"] ? errors["password"].message : ""}
                   </FormHelperText>
                 </FormControl>
               </Box>
 
+              {/* Repeat Password Input */}
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={
@@ -133,24 +140,29 @@ const LoginPage: React.FC = () => {
                     : { marginTop: -40, height: 0, opacity: 0 }
                 }
               >
-                <Box className="box">
+                <Box
+                  className={`${
+                    !!errors["passwordConfirm"] ? "flex-center" : "flex-end"
+                  } box`}
+                >
                   <Lock className="icon" />
                   <FormControl variant="standard">
-                    <InputLabel htmlFor="standard-adornment-password">
+                    <InputLabel
+                      error={!!errors["passwordConfirm"]}
+                      htmlFor="standard-adornment-password"
+                    >
                       Repeat Password
                     </InputLabel>
                     <Input
-                      id="standard-adornment-password"
                       type={showRepeatPassword ? "text" : "password"}
-                      onChange={(e) => setRepeatPassword(e.target.value)}
+                      error={!!errors["passwordConfirm"]}
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
                             aria-label="toggle password visibility"
                             onClick={() =>
-                              setShowRepeatPassword(!showRepeatPassword)
+                              setShowRepeatPassword((show) => !show)
                             }
-                            onMouseDown={handleMouseDownPassword}
                           >
                             {showRepeatPassword ? (
                               <VisibilityOff />
@@ -160,15 +172,12 @@ const LoginPage: React.FC = () => {
                           </IconButton>
                         </InputAdornment>
                       }
+                      {...register("passwordConfirm")}
                     />
-                    <FormHelperText
-                      error={repeatPassword != password || !repeatPassword}
-                    >
-                      {!repeatPassword
-                        ? "Please repeat your password"
-                        : repeatPassword === password
-                        ? "Nice"
-                        : "Password not match"}
+                    <FormHelperText error={!!errors["passwordConfirm"]}>
+                      {errors["passwordConfirm"]
+                        ? errors["passwordConfirm"].message
+                        : ""}
                     </FormHelperText>
                   </FormControl>
                 </Box>

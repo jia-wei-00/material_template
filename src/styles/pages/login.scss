@@ -47,6 +47,13 @@
 
   .box {
     display: flex;
+  }
+
+  .flex-end {
+    align-items: flex-end;
+  }
+
+  .flex-center {
     align-items: center;
   }
 

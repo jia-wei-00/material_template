@@ -25,7 +25,9 @@ const App: React.FC = () => {
 
         <Routes>
           {!authStore.user ? (
-            <Route path="/" element={<LoginPage />} />
+            <>
+              <Route path="/" element={<LoginPage />} />
+            </>
           ) : (
             <Route path="/" element={<HomePage />} />
           )}
