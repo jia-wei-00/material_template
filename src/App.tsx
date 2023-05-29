@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-import { LoginPage } from "./pages";
+import { LoginPage, HomePage } from "./pages";
 import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme, lightTheme } from "./theme";
 import "./styles/main.scss";
-import { modeStore } from "./stores";
+import { modeStore, authStore } from "./stores";
 import { Brightness7, ModeNight } from "@mui/icons-material";
 import { observer } from "mobx-react-lite";
 
@@ -24,7 +24,11 @@ const App: React.FC = () => {
         </div>
 
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          {!authStore.user ? (
+            <Route path="/" element={<LoginPage />} />
+          ) : (
+            <Route path="/" element={<HomePage />} />
+          )}
         </Routes>
       </div>
     </ThemeProvider>

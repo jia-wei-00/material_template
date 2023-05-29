@@ -6,10 +6,12 @@ import {
   Card,
   CardContent,
   FormControl,
+  FormHelperText,
   IconButton,
   Input,
   InputAdornment,
   InputLabel,
+  TextField,
 } from "@mui/material";
 import {
   EmailRounded,
@@ -19,12 +21,17 @@ import {
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { HomeParticle } from "../components";
+import { authStore } from "../stores";
 
 const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const [showRepeatPassword, setShowRepeatPassword] =
     React.useState<boolean>(false);
-  const [active, setActive] = React.useState<String>("login");
+  const [active, setActive] = React.useState<string>("login");
+  const [email, setEmail] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
+  const [repeatPassword, setRepeatPassword] = React.useState<string>("");
+  const [formSubmitted, setFormSubmitted] = React.useState<boolean>(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -32,6 +39,14 @@ const LoginPage: React.FC = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
+  };
+
+  const handleLoginRegister = (e: React.FormEvent<HTMLFormElement>): void => {
+    // if(email || pass)
+    e.preventDefault();
+    active === "login"
+      ? authStore.signIn(email, password)
+      : authStore.signUp(email, repeatPassword);
   };
 
   return (
@@ -47,12 +62,38 @@ const LoginPage: React.FC = () => {
                 className="indicator"
               />
             </motion.div>
-            <motion.form className="mt-10">
+            <motion.form className="mt-10" onSubmit={handleLoginRegister}>
               <Box className="box mt-10">
                 <EmailRounded className="icon" />
                 <FormControl variant="standard" className="form-control">
-                  <InputLabel htmlFor="standard-email">Email</InputLabel>
-                  <Input id="standard-email" type="text" />
+                  <InputLabel
+                    error={!/\S+@\S+\.\S+/.test(email) && email != ""}
+                    htmlFor="standard-email"
+                  >
+                    Email
+                  </InputLabel>
+                  <Input
+                    error={!/\S+@\S+\.\S+/.test(email) && email != ""}
+                    id="standard-error-helper-text"
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                    value={email}
+                    required
+                  />
+                  <FormHelperText
+                    error={
+                      !/\S+@\S+\.\S+/.test(email) &&
+                      email !== "" &&
+                      formSubmitted &&
+                      email === ""
+                    }
+                  >
+                    {!email
+                      ? "Please fill in your email"
+                      : !/\S+@\S+\.\S+/.test(email)
+                      ? "Incorrect email format"
+                      : "Nice"}
+                  </FormHelperText>
                 </FormControl>
               </Box>
               <Box className={`box ${active === "login" && "mb-10"}`}>
@@ -64,6 +105,7 @@ const LoginPage: React.FC = () => {
                   <Input
                     id="standard-adornment-password"
                     type={showPassword ? "text" : "password"}
+                    onChange={(e) => setPassword(e.target.value)}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -75,7 +117,11 @@ const LoginPage: React.FC = () => {
                         </IconButton>
                       </InputAdornment>
                     }
+                    required
                   />
+                  <FormHelperText error={!password}>
+                    {!password ? "Please fill in your password" : "Nice"}
+                  </FormHelperText>
                 </FormControl>
               </Box>
 
@@ -96,6 +142,7 @@ const LoginPage: React.FC = () => {
                     <Input
                       id="standard-adornment-password"
                       type={showRepeatPassword ? "text" : "password"}
+                      onChange={(e) => setRepeatPassword(e.target.value)}
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
@@ -114,11 +161,20 @@ const LoginPage: React.FC = () => {
                         </InputAdornment>
                       }
                     />
+                    <FormHelperText
+                      error={repeatPassword != password || !repeatPassword}
+                    >
+                      {!repeatPassword
+                        ? "Please repeat your password"
+                        : repeatPassword === password
+                        ? "Nice"
+                        : "Password not match"}
+                    </FormHelperText>
                   </FormControl>
                 </Box>
               </motion.div>
 
-              <Button variant="contained" className="mt-10">
+              <Button type="submit" variant="contained" className="mt-10">
                 {active === "login" ? "LOGIN" : "REGISTER"}
               </Button>
             </motion.form>
