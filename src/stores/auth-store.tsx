@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 export class AuthStoreImplementation {
@@ -96,7 +97,7 @@ export class AuthStoreImplementation {
   async signOut(): Promise<void> {
     const id = toast.loading("Please wait...");
     try {
-      const signout = await signOut(auth);
+      await signOut(auth);
       toast.update(id, {
         render: "Successfully Logout",
         type: "success",
@@ -130,6 +131,26 @@ export class AuthStoreImplementation {
     });
     this.user = userCredential.user;
     try {
+    } catch (error: any) {
+      toast.update(id, {
+        render: error.message,
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      });
+    }
+  }
+
+  async resetPassword(email: string): Promise<void> {
+    const id = toast.loading("Please wait...");
+    try {
+      await sendPasswordResetEmail(auth, email);
+      toast.update(id, {
+        render: `Check your email to reset password`,
+        type: "success",
+        isLoading: false,
+        autoClose: 5000,
+      });
     } catch (error: any) {
       toast.update(id, {
         render: error.message,

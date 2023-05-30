@@ -25,12 +25,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, loginSchema } from "../../schemas/login-page-schemas";
 import { InputData } from "../../types/form";
+import ResetPassword from "./reset-password";
 
 const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const [showRepeatPassword, setShowRepeatPassword] =
     React.useState<boolean>(false);
   const [active, setActive] = React.useState<string>("login");
+  const [openResetModal, setOpenResetModal] = React.useState<boolean>(false);
 
   const {
     register,
@@ -191,6 +193,10 @@ const LoginPage: React.FC = () => {
         </Card>
       </motion.div>
       <HomeParticle />
+      <ResetPassword
+        openResetModal={openResetModal}
+        setOpenResetModal={setOpenResetModal}
+      />
     </div>
   );
 };
