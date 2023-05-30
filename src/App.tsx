@@ -6,6 +6,7 @@ import "./styles/main.scss";
 import { modeStore, authStore } from "./stores";
 import { Brightness7, ModeNight } from "@mui/icons-material";
 import { observer } from "mobx-react-lite";
+import { ToastContainer } from "react-toastify";
 
 const App: React.FC = () => {
   return (
@@ -33,6 +34,7 @@ const App: React.FC = () => {
           )}
         </Routes>
       </div>
+      <ToastContainer theme={modeStore.mode === "dark" ? "dark" : "light"} />
     </ThemeProvider>
   );
 };

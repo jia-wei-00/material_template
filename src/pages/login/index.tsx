@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/pages/login.scss";
+import "../../styles/pages/login.scss";
 import {
   Box,
   Button,
@@ -19,12 +19,12 @@ import {
   VisibilityOff,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import { HomeParticle } from "../components";
-import { authStore } from "../stores";
+import { HomeParticle } from "../../components";
+import { authStore } from "../../stores";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema, loginSchema } from "../schemas/login-page-schemas";
-import { InputData } from "../types/form";
+import { registerSchema, loginSchema } from "../../schemas/login-page-schemas";
+import { InputData } from "../../types/form";
 
 const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
