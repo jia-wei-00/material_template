@@ -5,19 +5,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  // transform: translateY(50%);
   height: 100vh;
   color: white;
   overflow: hidden;
+
+  .form-body {
+    z-index: 10;
+  }
 
   .icon {
     padding: 0 10px 4px 0;
   }
 
   & > div > .card {
-    z-index: 1;
     position: relative;
     padding: 10px;
     max-width: 350px;
+
+    & > .content {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   .btn-group {
