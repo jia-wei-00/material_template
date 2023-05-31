@@ -11,6 +11,7 @@ import {
   signOut,
   sendPasswordResetEmail,
 } from "firebase/auth";
+import { makePersistable } from "mobx-persist-store";
 
 export class AuthStoreImplementation {
   user: User | null = null;
@@ -24,6 +25,13 @@ export class AuthStoreImplementation {
       login_modal: observable,
       setUser: action.bound,
       signOut: action.bound,
+    });
+
+    // Make the store persistable
+    makePersistable(this, {
+      name: "UserStore",
+      properties: ["user"],
+      storage: window.localStorage,
     });
 
     // auth.onAuthStateChanged(
