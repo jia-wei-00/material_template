@@ -7,6 +7,7 @@ import { modeStore, authStore } from "./stores";
 import { Brightness7, ModeNight } from "@mui/icons-material";
 import { observer } from "mobx-react-lite";
 import { ToastContainer } from "react-toastify";
+import { Nav } from "./components";
 
 const App: React.FC = () => {
   return (
@@ -23,7 +24,7 @@ const App: React.FC = () => {
         >
           {modeStore.mode === "dark" ? <Brightness7 /> : <ModeNight />}
         </div>
-
+        {authStore.user && <Nav />}
         <Routes>
           {!authStore.user ? (
             <>

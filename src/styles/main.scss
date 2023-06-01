@@ -26,6 +26,30 @@ body {
   }
 }
 
+a {
+  color: black;
+  text-decoration: none;
+  position: relative;
+}
+
+.link {
+  &:after {
+    position: absolute;
+    transition: $transition;
+    background-color: white;
+    content: "";
+    display: block;
+    height: 1px;
+    left: 0;
+    width: 0;
+    bottom: 0;
+  }
+
+  &:hover:after {
+    width: 100%;
+  }
+}
+
 .wrapper {
   max-width: 1440px;
   margin: 0 auto;
