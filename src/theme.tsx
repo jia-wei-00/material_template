@@ -23,6 +23,20 @@ export const darkTheme = createTheme({
         },
       },
     },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#3F4E4F",
+        },
+      },
+    },
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#FFFFFF",
+        },
+      },
+    },
   },
   typography: {
     fontFamily: "poppins",
@@ -42,7 +56,7 @@ export const lightTheme = createTheme({
   components: {
     MuiSvgIcon: {
       defaultProps: {
-        htmlColor: "#808080", // Specify the color for icons in light mode
+        htmlColor: "#808080",
       },
     },
     MuiButton: {
@@ -56,6 +70,27 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: "#DCD7C9",
+        },
+      },
+    },
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#DCD7C9",
+        },
+      },
+    },
+    MuiIcon: {
+      styleOverrides: {
+        root: {
+          color: "#e9e0d1",
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          color: "#e9e0d1",
         },
       },
     },

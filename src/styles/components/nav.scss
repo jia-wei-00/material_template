@@ -1,0 +1,20 @@
+@import "../variables";
+
+#menu-appbar {
+  top: 40px;
+}
+
+.app-bar {
+  transition: $transition-all;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.link-column {
+  display: flex;
+  flex-grow: 1;
+  column-gap: 15px;
+}

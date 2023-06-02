@@ -34,6 +34,13 @@ const LoginForm: React.FC = () => {
     resolver: zodResolver(loginSchema),
   });
 
+  React.useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubmitSuccessful]);
+
   const onSubmitHandler: SubmitHandler<InputData> = (values) => {
     authStore.signIn(values.email, values.password);
   };

@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { LoginPage, HomePage } from "./pages";
+import { LoginPage } from "./pages";
 import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme, lightTheme } from "./theme";
 import "./styles/main.scss";
@@ -8,6 +8,7 @@ import { Brightness7, ModeNight } from "@mui/icons-material";
 import { observer } from "mobx-react-lite";
 import { ToastContainer } from "react-toastify";
 import { Nav } from "./components";
+import { pages } from "./constant";
 
 const App: React.FC = () => {
   return (
@@ -31,7 +32,11 @@ const App: React.FC = () => {
               <Route path="/" element={<LoginPage />} />
             </>
           ) : (
-            <Route path="/" element={<HomePage />} />
+            pages.map((page, index) => {
+              return (
+                <Route key={index} path={page.path} element={page.element} />
+              );
+            })
           )}
         </Routes>
       </div>
