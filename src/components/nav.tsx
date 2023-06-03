@@ -56,7 +56,7 @@ function Nav() {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            className="desktop-hide"
           >
             <MenuIcon />
           </IconButton>

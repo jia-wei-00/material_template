@@ -47,16 +47,16 @@ export const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#A27B5C",
+      main: "#A0937D",
     },
     secondary: {
-      main: "#2C3639",
+      main: "#F6E6CB",
     },
   },
   components: {
     MuiSvgIcon: {
       defaultProps: {
-        htmlColor: "#808080",
+        htmlColor: "#FFFFFF",
       },
     },
     MuiButton: {
@@ -69,7 +69,7 @@ export const lightTheme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          backgroundColor: "#DCD7C9",
+          backgroundColor: "#A27B5C",
         },
       },
     },
@@ -77,20 +77,6 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: "#DCD7C9",
-        },
-      },
-    },
-    MuiIcon: {
-      styleOverrides: {
-        root: {
-          color: "#e9e0d1",
-        },
-      },
-    },
-    MuiIconButton: {
-      styleOverrides: {
-        root: {
-          color: "#e9e0d1",
         },
       },
     },

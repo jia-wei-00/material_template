@@ -13,6 +13,7 @@ body {
   #light {
     background: $main-color;
     color: $black;
+    // transition: $font-transition;
 
     a {
       color: $third-color;
@@ -96,10 +97,4 @@ a {
 
 .mb-5 {
   margin-bottom: 5px !important;
-}
-
-@media screen and (max-width: 480px) {
-  .mobile-hide {
-    display: none;
-  }
 }

@@ -18,3 +18,15 @@
   flex-grow: 1;
   column-gap: 15px;
 }
+
+@media screen and (max-width: 480px) {
+  .mobile-hide {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 481px) {
+  .desktop-hide {
+    display: none !important;
+  }
+}

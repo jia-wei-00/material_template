@@ -103,7 +103,7 @@ const LoginForm: React.FC = () => {
       </Box>
 
       <Button type="submit" variant="contained" className="mt-10">
-        REGISTER
+        LOGIN
       </Button>
     </motion.form>
   );
