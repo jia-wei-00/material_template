@@ -1,4 +1,5 @@
 import { observable, makeObservable, action } from "mobx";
+import { makePersistable } from "mobx-persist-store";
 
 class modeStoreImplementation {
   mode = "dark";
@@ -7,6 +8,12 @@ class modeStoreImplementation {
     makeObservable(this, {
       mode: observable,
       setMode: action,
+    });
+
+    makePersistable(this, {
+      name: "ModeStore",
+      properties: ["mode"],
+      storage: window.localStorage,
     });
   }
 

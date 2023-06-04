@@ -47,7 +47,7 @@ export const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#A0937D",
+      main: "#A27B5C",
     },
     secondary: {
       main: "#F6E6CB",
@@ -62,14 +62,7 @@ export const lightTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          color: "#FFFFFF",
-        },
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          backgroundColor: "#A27B5C",
+          // color: "#FFFFFF",
         },
       },
     },
