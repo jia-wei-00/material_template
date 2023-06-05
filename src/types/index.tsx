@@ -3,3 +3,7 @@ export type InputData = {
   password: string;
   passwordConfirm?: string;
 };
+
+export type ChildrenProps = {
+  children: React.ReactNode;
+};

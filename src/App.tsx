@@ -9,6 +9,7 @@ import { observer } from "mobx-react-lite";
 import { ToastContainer } from "react-toastify";
 import { Nav } from "./components";
 import { pages } from "./constant";
+import Auth from "./Auth";
 
 const App: React.FC = () => {
   return (
@@ -34,7 +35,9 @@ const App: React.FC = () => {
           ) : (
             pages.map((page, index) => {
               return (
-                <Route key={index} path={page.path} element={page.element} />
+                <Auth>
+                  <Route key={index} path={page.path} element={page.element} />
+                </Auth>
               );
             })
           )}

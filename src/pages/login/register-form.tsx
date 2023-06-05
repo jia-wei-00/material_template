@@ -17,7 +17,7 @@ import {
 import { motion } from "framer-motion";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { InputData } from "../../types/form";
+import { InputData } from "../../types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "../../schemas/login-page-schemas";
 import { authStore } from "../../stores";

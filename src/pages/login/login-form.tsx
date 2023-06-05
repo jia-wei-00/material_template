@@ -2,7 +2,7 @@ import React from "react";
 import { authStore } from "../../stores";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../schemas/login-page-schemas";
-import { InputData } from "../../types/form";
+import { InputData } from "../../types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import {
