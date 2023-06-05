@@ -56,7 +56,7 @@ export const lightTheme = createTheme({
   components: {
     MuiSvgIcon: {
       defaultProps: {
-        htmlColor: "#FFFFFF",
+        htmlColor: "#A27B5C",
       },
     },
     MuiButton: {
