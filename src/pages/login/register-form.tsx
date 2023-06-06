@@ -21,11 +21,14 @@ import { InputData } from "../../types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "../../schemas/login-page-schemas";
 import { authStore } from "../../stores";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const [showRepeatPassword, setShowRepeatPassword] =
     React.useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -37,6 +40,10 @@ const RegisterForm: React.FC = () => {
   });
 
   React.useEffect(() => {
+    if (authStore.user) {
+      navigate("/");
+    }
+
     if (isSubmitSuccessful) {
       reset();
     }

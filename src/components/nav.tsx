@@ -14,6 +14,7 @@ import { authStore } from "../stores";
 import { pages, settings } from "../constant";
 import { Link } from "react-router-dom";
 import "../styles/components/nav.scss";
+import CustomizedSwitches from "./theme-toggle";
 
 function Nav() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -70,7 +71,7 @@ function Nav() {
           </Link>
 
           <Box className="link-column mobile-hide">
-            {pages.map((page, index) => (
+            {pages.slice(1).map((page, index) => (
               <Link key={index} className="link" to={page.path}>
                 {page.title}
               </Link>
@@ -78,11 +79,15 @@ function Nav() {
           </Box>
 
           <Box>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            <div className="nav-end">
+              <CustomizedSwitches />
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+            </div>
+
             <Menu
               id="menu-appbar"
               anchorEl={anchorElUser}

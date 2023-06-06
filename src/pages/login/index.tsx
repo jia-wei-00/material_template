@@ -6,10 +6,20 @@ import { HomeParticle } from "../../components";
 import ResetPassword from "./reset-password";
 import RegisterForm from "./register-form";
 import LoginForm from "./login-form";
+import { authStore } from "../../stores";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
   const [active, setActive] = React.useState<string>("login");
   const [openResetModal, setOpenResetModal] = React.useState<boolean>(false);
+
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (authStore.user) {
+      navigate("/");
+    }
+  }, [authStore.user]);
 
   return (
     <div className="wrapper">

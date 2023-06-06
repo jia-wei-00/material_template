@@ -6,6 +6,11 @@
 
 .app-bar {
   transition: $transition-all;
+  backdrop-filter: blur(15px);
+
+  .nav-end {
+    display: flex;
+  }
 }
 
 .toolbar {

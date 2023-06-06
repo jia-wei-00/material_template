@@ -9,7 +9,7 @@ const Auth: React.FC<ChildrenProps> = ({ children }) => {
 
   React.useEffect(() => {
     if (!authStore.user) {
-      navigate("/");
+      navigate("/login");
     }
   }, [authStore.user, navigate]);
 
