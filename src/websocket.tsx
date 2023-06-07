@@ -16,6 +16,7 @@ const tickResponse = async (res: any) => {
   }
   if (data.msg_type === "tick") {
     console.log(data.tick);
+    return data.tick;
   }
 };
 
