@@ -2,7 +2,7 @@ import React from "react";
 import { subscribeTicks, unsubscribeTicks } from "../../websocket";
 import { AxisOptions, Chart, ChartOptions } from "react-charts";
 import useDemoConfig from "./useDemoConfig";
-import ResizableBox from "./resizableBox";
+import "../../styles/pages/home.scss";
 
 interface ChartData {
   label: string;
@@ -49,7 +49,7 @@ const HomePage: React.FC = () => {
   return (
     <div>
       Home
-      <ResizableBox>
+      <div className="container">
         <Chart
           options={{
             data,
@@ -57,7 +57,7 @@ const HomePage: React.FC = () => {
             secondaryAxes,
           }}
         />
-      </ResizableBox>
+      </div>
     </div>
   );
 };
