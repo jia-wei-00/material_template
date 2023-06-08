@@ -15,7 +15,7 @@ const tickResponse = async (res: any) => {
     await api.disconnect();
   }
   if (data.msg_type === "tick") {
-    console.log(data.tick);
+    // console.log(data.tick);
     return data.tick;
   }
 };
